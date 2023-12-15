@@ -4,7 +4,7 @@ exports[`renders correctly 1`] = `
 <RCTSafeAreaView
   style={
     {
-      "backgroundColor": "cyan",
+      "backgroundColor": "#f5f5dc",
       "height": "100%",
     }
   }
