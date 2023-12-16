@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": "lavenderblush",
+      "borderColor": "black",
+      "borderRadius": 10,
+      "borderWidth": 1,
+      "flex": 1,
+      "marginBottom": 10,
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "mediumvioletred",
+        "fontSize": 18,
+      }
+    }
+  >
+    test-name
+  </Text>
+  <Text
+    style={
+      {
+        "color": "deeppink",
+        "fontSize": 15,
+      }
+    }
+  >
+    test-description
+  </Text>
+</View>
+`;
