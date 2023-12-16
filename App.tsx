@@ -1,14 +1,7 @@
 import React, {useState, useCallback} from 'react';
-import {
-  Button,
-  SafeAreaView,
-  ScrollView,
-  StyleProp,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {SafeAreaView, StyleProp, ViewStyle} from 'react-native';
 import {LoginScreen} from './src/screens/login/LoginScreen';
+import {DashboardScreen} from './src/screens/dashboard/DashboardScreen';
 
 function App(): React.JSX.Element {
   const [screenToDisplay, setScreenToDisplay] = useState<screen>(screen.Login);
@@ -18,23 +11,21 @@ function App(): React.JSX.Element {
   );
   const navigateToLoginScreen = useCallback(
     () => setScreenToDisplay(screen.Login),
-    []
-  )
+    [],
+  );
   const backgroundStyle: StyleProp<ViewStyle> = {
     backgroundColor: '#f5f5dc',
     height: '100%',
+    flex: 1,
   };
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View>
-          <Text>We3World Login Page</Text>
-          {screenToDisplay === screen.Login ? (
-            <LoginScreen navigateToDashboard={navigateToDashboard} />
-          ) : <Button title='logout' onPress={navigateToLoginScreen}/>}
-        </View>
-      </ScrollView>
+      {screenToDisplay === screen.Login ? (
+        <LoginScreen navigateToDashboard={navigateToDashboard} />
+      ) : (
+        <DashboardScreen navigateToLoginScreen={navigateToLoginScreen} />
+      )}
     </SafeAreaView>
   );
 }

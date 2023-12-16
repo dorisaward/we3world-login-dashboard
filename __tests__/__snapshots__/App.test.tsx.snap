@@ -5,20 +5,9 @@ exports[`renders correctly 1`] = `
   style={
     {
       "backgroundColor": "#f5f5dc",
+      "flex": 1,
       "height": "100%",
     }
   }
->
-  <RCTScrollView
-    contentInsetAdjustmentBehavior="automatic"
-  >
-    <View>
-      <View>
-        <Text>
-          We3World Login Page
-        </Text>
-      </View>
-    </View>
-  </RCTScrollView>
-</RCTSafeAreaView>
+/>
 `;

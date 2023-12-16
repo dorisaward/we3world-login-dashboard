@@ -1,11 +1,11 @@
 import React, {useCallback, useState} from 'react';
-import {Button, Text, TextInput, View} from 'react-native';
+import {Button, ScrollView, Text, TextInput, View} from 'react-native';
 import {styles} from './LoginScreen.styles';
 import {validateLoginDetails} from '../../domain/login/validateLoginDetails';
 
 type Props = {
   /**
-   * Unrenders the login screen and renders a differrent screen
+   * Unrenders the login screen and renders the {@link DashboardScreen}
    */
   navigateToDashboard: () => void;
 };
@@ -30,23 +30,27 @@ export const LoginScreen = ({
   }, [email, password, setErrorMessage, navigateToDashboard]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Please enter your email and password</Text>
-      <TextInput
-        style={styles.textInput}
-        value={email}
-        placeholder="email address"
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.textInput}
-        secureTextEntry={true}
-        value={password}
-        placeholder="password"
-        onChangeText={setPassword}
-      />
-      {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
-      <Button title="login" onPress={handleSubmitLoginDetails} />
-    </View>
+    <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <View style={styles.container}>
+        <Text style={styles.header}>Please enter your email and password</Text>
+        <TextInput
+          style={styles.textInput}
+          value={email}
+          placeholder="email address"
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.textInput}
+          secureTextEntry={true}
+          value={password}
+          placeholder="password"
+          onChangeText={setPassword}
+        />
+        {errorMessage && (
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
+        )}
+        <Button title="login" onPress={handleSubmitLoginDetails} />
+      </View>
+    </ScrollView>
   );
 };
