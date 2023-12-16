@@ -1,8 +1,9 @@
-import React from 'react';
-import {Button, FlatList, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, Button, FlatList, View} from 'react-native';
 import {styles} from './DashboardScreen.styles';
 import {Item} from '../../domain/dashboard/Item';
 import {DashboardItemView} from './components/DashboardItemView';
+import {fetchItems} from '../../domain/dashboard/fetchItems';
 
 type Props = {
   /**
@@ -14,34 +15,33 @@ type Props = {
 export const DashboardScreen = ({
   navigateToLoginScreen,
 }: Props): React.JSX.Element => {
+  const [items, setItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetchItems().then(fetchedItems => {
+      setItems(fetchedItems);
+      setLoading(false);
+    });
+  }, []);
   return (
     <View style={styles.container}>
-      <FlatList
-        data={dummyData}
-        renderItem={DashboardItemView}
-        keyExtractor={keyExtractor}
-      />
+      {loading ? (
+        <ActivityIndicator
+          testID="dashboard-screen-spinner"
+          color={'mediumvioletred'}
+          style={styles.activityIndicaton}
+          size={'large'}
+        />
+      ) : (
+        <FlatList
+          data={items}
+          renderItem={DashboardItemView}
+          keyExtractor={keyExtractor}
+        />
+      )}
       <Button title="logout" onPress={navigateToLoginScreen} />
     </View>
   );
 };
 
 const keyExtractor = (item: Item) => item.id;
-
-const dummyData: Item[] = [
-  {
-    id: '0',
-    name: 'Item 1',
-    description: 'Description aesrdthfjfdhgzxchjvn srdthsrtrdhf srdthfyg',
-  },
-  {
-    id: '1',
-    name: 'Item 2',
-    description: 'chgncgnbdhthdt sxchncgbdxgcnb xfrhfyjmfyhm xfgtsrtgsdrg',
-  },
-  {
-    id: '2',
-    name: 'Item 3',
-    description: 'zxfhbvcbngnhjfdtj aesrdthfjfdhgzxchjvn srdthsrtrdhf srdthfyg',
-  },
-];
