@@ -4,6 +4,8 @@ import {LoginScreen} from './src/screens/login/LoginScreen';
 import {DashboardScreen} from './src/screens/dashboard/DashboardScreen';
 import {createServer} from 'miragejs';
 import items from './src/domain/dashboard/items.json';
+import {Provider} from 'react-redux';
+import {store} from './src/domain/redux/store';
 
 function App(): React.JSX.Element {
   const [screenToDisplay, setScreenToDisplay] = useState<screen>(screen.Login);
@@ -32,13 +34,15 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      {screenToDisplay === screen.Login ? (
-        <LoginScreen navigateToDashboard={navigateToDashboard} />
-      ) : (
-        <DashboardScreen navigateToLoginScreen={navigateToLoginScreen} />
-      )}
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={backgroundStyle}>
+        {screenToDisplay === screen.Login ? (
+          <LoginScreen navigateToDashboard={navigateToDashboard} />
+        ) : (
+          <DashboardScreen navigateToLoginScreen={navigateToLoginScreen} />
+        )}
+      </SafeAreaView>
+    </Provider>
   );
 }
 

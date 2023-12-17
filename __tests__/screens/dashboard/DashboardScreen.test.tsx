@@ -2,7 +2,6 @@ import React from 'react';
 import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import {DashboardScreen} from '../../../src/screens/dashboard/DashboardScreen';
 import items from '../../../src/domain/dashboard/items.json';
-import {fetchItems} from '../../../src/domain/dashboard/fetchItems';
 
 const mockDashboardItemViewText = 'mockDashboardItemViewText';
 
@@ -20,8 +19,22 @@ jest.mock('../../../src/domain/dashboard/fetchItems', () => ({
   fetchItems: jest.fn().mockResolvedValue(undefined),
 }));
 
+const mockItemsSelector = jest.fn();
+jest.mock('../../../src/domain/redux/reducers/itemsReducer', () => ({
+  itemsSelector: mockItemsSelector,
+}));
+
+const mockDispatch = jest.fn();
+const mockAppSelector = {items: [], loading: false};
+jest.mock('../../../src/domain/redux/hooks', () => ({
+  useAppDispatch: jest.fn(() => mockDispatch),
+  useAppSelector: jest.fn(() => mockAppSelector),
+}));
+
 it('should render, given items not yet fetched', () => {
   // Given
+  jest.mocked(mockAppSelector).items = [];
+  jest.mocked(mockAppSelector).loading = true;
   const renderable = <DashboardScreen navigateToLoginScreen={jest.fn()} />;
 
   // When
@@ -34,7 +47,8 @@ it('should render, given items not yet fetched', () => {
 
 it('should render, given items fetched', async () => {
   // Given
-  jest.mocked(fetchItems).mockResolvedValueOnce(items);
+  jest.mocked(mockAppSelector).items = items as any;
+  jest.mocked(mockAppSelector).loading = false;
   const renderable = <DashboardScreen navigateToLoginScreen={jest.fn()} />;
   const {toJSON, queryByTestId, getAllByText} = render(renderable);
 
@@ -51,10 +65,13 @@ it('should render, given items fetched', async () => {
 
 it('should navigate, given logout button pressed', () => {
   // Given
+  jest.mocked(mockAppSelector).items = [];
+  jest.mocked(mockAppSelector).loading = false;
   const navigateToLoginScreen = jest.fn();
   const renderable = (
     <DashboardScreen navigateToLoginScreen={navigateToLoginScreen} />
   );
+
   const {getByText} = render(renderable);
   const logoutButton = getByText('logout');
 

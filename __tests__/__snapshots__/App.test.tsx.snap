@@ -1,13 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<RCTSafeAreaView
-  style={
+<View
+  store={
     {
-      "backgroundColor": "#f5f5dc",
-      "flex": 1,
-      "height": "100%",
+      "@@observable": [Function],
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
     }
   }
-/>
+>
+  <RCTSafeAreaView
+    style={
+      {
+        "backgroundColor": "#f5f5dc",
+        "flex": 1,
+        "height": "100%",
+      }
+    }
+  />
+</View>
 `;

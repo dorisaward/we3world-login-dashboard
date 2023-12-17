@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {ActivityIndicator, Button, FlatList, View} from 'react-native';
 import {styles} from './DashboardScreen.styles';
 import {Item} from '../../domain/dashboard/Item';
 import {DashboardItemView} from './components/DashboardItemView';
+import {useAppDispatch, useAppSelector} from '../../domain/redux/hooks';
 import {fetchItems} from '../../domain/dashboard/fetchItems';
+import {itemsSelector} from '../../domain/redux/reducers/itemsReducer';
 
 type Props = {
   /**
@@ -15,14 +17,13 @@ type Props = {
 export const DashboardScreen = ({
   navigateToLoginScreen,
 }: Props): React.JSX.Element => {
-  const [items, setItems] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
+  const {items, loading} = useAppSelector(itemsSelector);
+
   useEffect(() => {
-    fetchItems().then(fetchedItems => {
-      setItems(fetchedItems);
-      setLoading(false);
-    });
-  }, []);
+    dispatch(fetchItems() as any);
+  }, [dispatch]);
+
   return (
     <View style={styles.container}>
       {loading ? (
