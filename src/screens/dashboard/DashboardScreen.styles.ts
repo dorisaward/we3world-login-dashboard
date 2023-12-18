@@ -9,4 +9,9 @@ export const styles = StyleSheet.create({
   activityIndicaton: {
     flex: 1,
   },
+  errorMessage: {
+    color: 'red',
+    marginVertical: 10,
+    fontWeight: 'bold',
+  },
 });

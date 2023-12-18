@@ -33,7 +33,7 @@ jest.mock('../../../src/domain/redux/reducers/itemsReducer', () => ({
 }));
 
 const mockDispatch = jest.fn();
-const mockAppSelector = {items: [], loading: false};
+const mockAppSelector = {items: [], loading: false, error: undefined};
 jest.mock('../../../src/domain/redux/hooks', () => ({
   useAppDispatch: jest.fn(() => mockDispatch),
   useAppSelector: jest.fn(() => mockAppSelector),
@@ -68,6 +68,24 @@ it('should render, given items fetched', async () => {
   // Then
   expect(queryByTestId('dashboard-screen-spinner')).toBeFalsy();
   expect(getAllByText(mockDashboardItemViewText)).toHaveLength(3);
+  expect(toJSON()).toMatchSnapshot();
+});
+
+it('should render, given items failed to fetch', async () => {
+  // Given
+  const errorMessage = 'test error';
+  jest.mocked(mockAppSelector).loading = false;
+  jest.mocked(mockAppSelector).error = errorMessage as any;
+  const renderable = <DashboardScreen {...mockNavigation} />;
+  const {toJSON, queryByTestId, getByText} = render(renderable);
+
+  // When
+  await waitFor(() =>
+    expect(queryByTestId('dashboard-screen-spinner')).toBeFalsy(),
+  );
+
+  // Then
+  expect(getByText(errorMessage)).toBeTruthy();
   expect(toJSON()).toMatchSnapshot();
 });
 

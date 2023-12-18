@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {ActivityIndicator, Button, FlatList, View} from 'react-native';
+import {ActivityIndicator, Button, FlatList, Text, View} from 'react-native';
 import {styles} from './DashboardScreen.styles';
 import {Item} from '../../domain/dashboard/Item';
 import {DashboardItemView} from './components/DashboardItemView';
@@ -15,11 +15,13 @@ export const DashboardScreen = ({
   navigation,
 }: NavigationProp): React.JSX.Element => {
   const dispatch = useAppDispatch();
-  const {items, loading} = useAppSelector(itemsSelector);
+  const {items, loading, error} = useAppSelector(itemsSelector);
 
-  useEffect(() => {
+  const tryToFetchItems = useCallback(() => {
     dispatch(fetchItems() as any);
   }, [dispatch]);
+
+  useEffect(tryToFetchItems, [tryToFetchItems]);
 
   useEffect(preventAndroidBack, []);
 
@@ -30,6 +32,12 @@ export const DashboardScreen = ({
 
   return (
     <View style={styles.container}>
+      {error && (
+        <>
+          <Text style={styles.errorMessage}>{error}</Text>
+          <Button title="retry" onPress={tryToFetchItems} />
+        </>
+      )}
       {loading ? (
         <ActivityIndicator
           testID="dashboard-screen-spinner"

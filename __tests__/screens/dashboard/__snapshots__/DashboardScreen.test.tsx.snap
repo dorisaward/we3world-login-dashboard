@@ -1,5 +1,259 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should render, given items failed to fetch 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+      "height": "100%",
+      "padding": 10,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "red",
+        "fontWeight": "bold",
+        "marginVertical": 10,
+      }
+    }
+  >
+    test error
+  </Text>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {},
+        ]
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#007AFF",
+              "fontSize": 18,
+              "margin": 8,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        retry
+      </Text>
+    </View>
+  </View>
+  <RCTScrollView
+    data={
+      [
+        {
+          "description": "Description aesrdthfjfdhgzxchjvn srdthsrtrdhf srdthfyg",
+          "id": "0",
+          "name": "Item 1",
+        },
+        {
+          "description": "chgncgnbdhthdt sxchncgbdxgcnb xfrhfyjmfyhm xfgtsrtgsdrg",
+          "id": "1",
+          "name": "Item 2",
+        },
+        {
+          "description": "zxfhbvcbngnhjfdtj aesrdthfjfdhgzxchjvn srdthsrtrdhf srdthfyg",
+          "id": "2",
+          "name": "Item 3",
+        },
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={0.0001}
+    stickyHeaderIndices={[]}
+    viewabilityConfigCallbackPairs={[]}
+  >
+    <View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          index={0}
+          item={
+            {
+              "description": "Description aesrdthfjfdhgzxchjvn srdthsrtrdhf srdthfyg",
+              "id": "0",
+              "name": "Item 1",
+            }
+          }
+          separators={
+            {
+              "highlight": [Function],
+              "unhighlight": [Function],
+              "updateProps": [Function],
+            }
+          }
+        >
+          mockDashboardItemViewText
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          index={1}
+          item={
+            {
+              "description": "chgncgnbdhthdt sxchncgbdxgcnb xfrhfyjmfyhm xfgtsrtgsdrg",
+              "id": "1",
+              "name": "Item 2",
+            }
+          }
+          separators={
+            {
+              "highlight": [Function],
+              "unhighlight": [Function],
+              "updateProps": [Function],
+            }
+          }
+        >
+          mockDashboardItemViewText
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          index={2}
+          item={
+            {
+              "description": "zxfhbvcbngnhjfdtj aesrdthfjfdhgzxchjvn srdthsrtrdhf srdthfyg",
+              "id": "2",
+              "name": "Item 3",
+            }
+          }
+          separators={
+            {
+              "highlight": [Function],
+              "unhighlight": [Function],
+              "updateProps": [Function],
+            }
+          }
+        >
+          mockDashboardItemViewText
+        </Text>
+      </View>
+    </View>
+  </RCTScrollView>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {},
+        ]
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#007AFF",
+              "fontSize": 18,
+              "margin": 8,
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        logout
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`should render, given items fetched 1`] = `
 <View
   style={
