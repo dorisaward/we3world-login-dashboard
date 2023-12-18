@@ -3,12 +3,19 @@ import {it, expect} from '@jest/globals';
 import {LoginScreen} from '../../../src/screens/login/LoginScreen';
 import {fireEvent, render} from '@testing-library/react-native';
 import {validateLoginDetails} from '../../../src/domain/login/validateLoginDetails';
+import {userActions} from '../../../src/domain/redux/reducers/userReducer';
 
 jest.mock('../../../src/domain/login/validateLoginDetails');
 
+const mockDispatch = jest.fn();
+jest.mock('../../../src/domain/redux/hooks', () => ({
+  useAppDispatch: jest.fn(() => mockDispatch),
+  useAppSelector: jest.fn(),
+}));
+
 it('should render', () => {
   // Given
-  const renderable = <LoginScreen navigateToDashboard={jest.fn()} />;
+  const renderable = <LoginScreen />;
 
   // When
   const {toJSON} = render(renderable);
@@ -22,8 +29,7 @@ it('should display error message, given login details not valid', () => {
   const errorMessage = 'test error message';
   jest.mocked(validateLoginDetails).mockImplementationOnce(() => errorMessage);
 
-  const navigateToDashboard = jest.fn();
-  const renderable = <LoginScreen navigateToDashboard={navigateToDashboard} />;
+  const renderable = <LoginScreen />;
   const {getByText, queryByText} = render(renderable);
   const loginButton = getByText('login');
 
@@ -31,16 +37,15 @@ it('should display error message, given login details not valid', () => {
   fireEvent.press(loginButton);
 
   // Then
-  expect(navigateToDashboard).not.toHaveBeenCalled();
+  expect(mockDispatch).not.toHaveBeenCalled();
   expect(queryByText(errorMessage)).toBeTruthy();
 });
 
-it('should navigate, given login details valid', () => {
+it('should login, given login details valid', () => {
   // Given
   jest.mocked(validateLoginDetails).mockImplementationOnce(() => true);
 
-  const navigateToDashboard = jest.fn();
-  const renderable = <LoginScreen navigateToDashboard={navigateToDashboard} />;
+  const renderable = <LoginScreen />;
   const {getByText} = render(renderable);
   const loginButton = getByText('login');
 
@@ -48,5 +53,5 @@ it('should navigate, given login details valid', () => {
   fireEvent.press(loginButton);
 
   // Then
-  expect(navigateToDashboard).toHaveBeenCalled();
+  expect(mockDispatch).toHaveBeenCalledWith(userActions.login());
 });

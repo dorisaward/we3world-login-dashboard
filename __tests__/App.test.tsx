@@ -11,7 +11,7 @@ jest.mock('miragejs', () => ({
     },
   }),
 }));
-jest.mock('../src/screens/login/LoginScreen');
+jest.mock('../src/screens/AppWithoutProvider');
 jest.mock('react-redux', () => ({
   Provider: (props: any) => {
     const RNView = require('react-native').View;

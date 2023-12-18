@@ -1,15 +1,12 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, StyleProp, ViewStyle} from 'react-native';
-import {LoginScreen} from './src/screens/login/LoginScreen';
-import {DashboardScreen} from './src/screens/dashboard/DashboardScreen';
 import {createServer} from 'miragejs';
 import items from './src/domain/dashboard/items.json';
 import {Provider} from 'react-redux';
 import {store} from './src/domain/redux/store';
+import {AppWithoutProvider} from './src/screens/AppWithoutProvider';
 
 function App(): React.JSX.Element {
-  const [screenToDisplay, setScreenToDisplay] = useState<screen>(screen.Login);
-
   useEffect(() => {
     const server = createServer({
       routes() {
@@ -19,14 +16,6 @@ function App(): React.JSX.Element {
     return server.shutdown;
   }, []);
 
-  const navigateToDashboard = useCallback(
-    () => setScreenToDisplay(screen.Dashboard),
-    [],
-  );
-  const navigateToLoginScreen = useCallback(
-    () => setScreenToDisplay(screen.Login),
-    [],
-  );
   const backgroundStyle: StyleProp<ViewStyle> = {
     backgroundColor: '#f5f5dc',
     height: '100%',
@@ -36,19 +25,10 @@ function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <SafeAreaView style={backgroundStyle}>
-        {screenToDisplay === screen.Login ? (
-          <LoginScreen navigateToDashboard={navigateToDashboard} />
-        ) : (
-          <DashboardScreen navigateToLoginScreen={navigateToLoginScreen} />
-        )}
+        <AppWithoutProvider />
       </SafeAreaView>
     </Provider>
   );
-}
-
-enum screen {
-  Login = 'Login',
-  Dashboard = 'Dashboard',
 }
 
 export default App;

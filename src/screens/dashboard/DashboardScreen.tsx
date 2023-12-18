@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {ActivityIndicator, Button, FlatList, View} from 'react-native';
 import {styles} from './DashboardScreen.styles';
 import {Item} from '../../domain/dashboard/Item';
@@ -6,23 +6,20 @@ import {DashboardItemView} from './components/DashboardItemView';
 import {useAppDispatch, useAppSelector} from '../../domain/redux/hooks';
 import {fetchItems} from '../../domain/dashboard/fetchItems';
 import {itemsSelector} from '../../domain/redux/reducers/itemsReducer';
+import {userActions} from '../../domain/redux/reducers/userReducer';
 
-type Props = {
-  /**
-   * Unrenders the dashboard screen and renders the {@link LoginScreen}
-   */
-  navigateToLoginScreen: () => void;
-};
-
-export const DashboardScreen = ({
-  navigateToLoginScreen,
-}: Props): React.JSX.Element => {
+export const DashboardScreen = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
   const {items, loading} = useAppSelector(itemsSelector);
 
   useEffect(() => {
     dispatch(fetchItems() as any);
   }, [dispatch]);
+
+  const handleLogout = useCallback(
+    () => dispatch(userActions.logout()),
+    [dispatch],
+  );
 
   return (
     <View style={styles.container}>
@@ -40,7 +37,7 @@ export const DashboardScreen = ({
           keyExtractor={keyExtractor}
         />
       )}
-      <Button title="logout" onPress={navigateToLoginScreen} />
+      <Button title="logout" onPress={handleLogout} />
     </View>
   );
 };

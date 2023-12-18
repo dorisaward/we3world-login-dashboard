@@ -2,6 +2,7 @@ import React from 'react';
 import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import {DashboardScreen} from '../../../src/screens/dashboard/DashboardScreen';
 import items from '../../../src/domain/dashboard/items.json';
+import {userActions} from '../../../src/domain/redux/reducers/userReducer';
 
 const mockDashboardItemViewText = 'mockDashboardItemViewText';
 
@@ -35,7 +36,7 @@ it('should render, given items not yet fetched', () => {
   // Given
   jest.mocked(mockAppSelector).items = [];
   jest.mocked(mockAppSelector).loading = true;
-  const renderable = <DashboardScreen navigateToLoginScreen={jest.fn()} />;
+  const renderable = <DashboardScreen />;
 
   // When
   const {toJSON, getByTestId} = render(renderable);
@@ -49,7 +50,7 @@ it('should render, given items fetched', async () => {
   // Given
   jest.mocked(mockAppSelector).items = items as any;
   jest.mocked(mockAppSelector).loading = false;
-  const renderable = <DashboardScreen navigateToLoginScreen={jest.fn()} />;
+  const renderable = <DashboardScreen />;
   const {toJSON, queryByTestId, getAllByText} = render(renderable);
 
   // When
@@ -63,14 +64,11 @@ it('should render, given items fetched', async () => {
   expect(toJSON()).toMatchSnapshot();
 });
 
-it('should navigate, given logout button pressed', () => {
+it('should logout, given logout button pressed', () => {
   // Given
   jest.mocked(mockAppSelector).items = [];
   jest.mocked(mockAppSelector).loading = false;
-  const navigateToLoginScreen = jest.fn();
-  const renderable = (
-    <DashboardScreen navigateToLoginScreen={navigateToLoginScreen} />
-  );
+  const renderable = <DashboardScreen />;
 
   const {getByText} = render(renderable);
   const logoutButton = getByText('logout');
@@ -79,5 +77,5 @@ it('should navigate, given logout button pressed', () => {
   fireEvent.press(logoutButton);
 
   // Then
-  expect(navigateToLoginScreen).toHaveBeenCalled();
+  expect(mockDispatch).toHaveBeenCalledWith(userActions.logout());
 });

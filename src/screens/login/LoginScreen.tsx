@@ -2,22 +2,16 @@ import React, {useCallback, useState} from 'react';
 import {Button, ScrollView, Text, TextInput, View} from 'react-native';
 import {styles} from './LoginScreen.styles';
 import {validateLoginDetails} from '../../domain/login/validateLoginDetails';
+import {useAppDispatch} from '../../domain/redux/hooks';
+import {userActions} from '../../domain/redux/reducers/userReducer';
 
-type Props = {
-  /**
-   * Unrenders the login screen and renders the {@link DashboardScreen}
-   */
-  navigateToDashboard: () => void;
-};
-
-export const LoginScreen = ({
-  navigateToDashboard,
-}: Props): React.JSX.Element => {
+export const LoginScreen = (): React.JSX.Element => {
   const [email, setEmail] = useState<string | undefined>(undefined);
   const [password, setPassword] = useState<string | undefined>(undefined);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
   );
+  const dispatch = useAppDispatch();
 
   const handleSubmitLoginDetails = useCallback(() => {
     const validation = validateLoginDetails(email, password);
@@ -25,9 +19,9 @@ export const LoginScreen = ({
       setErrorMessage(validation);
     } else if (validation) {
       setErrorMessage(undefined);
-      navigateToDashboard();
+      dispatch(userActions.login());
     }
-  }, [email, password, setErrorMessage, navigateToDashboard]);
+  }, [email, password, setErrorMessage, dispatch]);
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic">
