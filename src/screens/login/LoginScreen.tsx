@@ -27,6 +27,7 @@ export const LoginScreen = ({
     } else if (validation) {
       setErrorMessage(undefined);
       dispatch(userActions.login());
+      setPassword(undefined);
       navigation.navigate(ScreenNames.Dashboard);
     }
   }, [email, password, setErrorMessage, dispatch, navigation]);
