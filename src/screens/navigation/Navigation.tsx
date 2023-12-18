@@ -22,6 +22,7 @@ export const Navigation = (): React.JSX.Element => {
         contentStyle: backgroundStyle,
         headerShown: false,
         gestureEnabled: false,
+        animation: 'slide_from_bottom',
       }}
       initialRouteName={
         userIsLoggedIn ? ScreenNames.Dashboard : ScreenNames.Login
