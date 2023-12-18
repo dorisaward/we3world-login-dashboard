@@ -18,7 +18,11 @@ export const Navigation = (): React.JSX.Element => {
 
   return (
     <Stack.Navigator
-      screenOptions={{contentStyle: backgroundStyle, headerShown: false}}
+      screenOptions={{
+        contentStyle: backgroundStyle,
+        headerShown: false,
+        gestureEnabled: false,
+      }}
       initialRouteName={
         userIsLoggedIn ? ScreenNames.Dashboard : ScreenNames.Login
       }>

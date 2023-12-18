@@ -9,6 +9,7 @@ import {itemsSelector} from '../../domain/redux/reducers/itemsReducer';
 import {userActions} from '../../domain/redux/reducers/userReducer';
 import {NavigationProp} from '../../domain/navigation/NavigationProp';
 import {ScreenNames} from '../../domain/navigation/screenNames';
+import {preventAndroidBack} from '../../domain/navigation/preventAndroidBack';
 
 export const DashboardScreen = ({
   navigation,
@@ -19,6 +20,8 @@ export const DashboardScreen = ({
   useEffect(() => {
     dispatch(fetchItems() as any);
   }, [dispatch]);
+
+  useEffect(preventAndroidBack, []);
 
   const handleLogout = useCallback(() => {
     dispatch(userActions.logout());

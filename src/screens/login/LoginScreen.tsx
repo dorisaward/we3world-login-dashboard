@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Button, ScrollView, Text, TextInput, View} from 'react-native';
 import {styles} from './LoginScreen.styles';
 import {validateLoginDetails} from '../../domain/login/validateLoginDetails';
@@ -6,6 +6,7 @@ import {useAppDispatch} from '../../domain/redux/hooks';
 import {userActions} from '../../domain/redux/reducers/userReducer';
 import {ScreenNames} from '../../domain/navigation/screenNames';
 import {NavigationProp} from '../../domain/navigation/NavigationProp';
+import {preventAndroidBack} from '../../domain/navigation/preventAndroidBack';
 
 export const LoginScreen = ({
   navigation,
@@ -16,6 +17,8 @@ export const LoginScreen = ({
     undefined,
   );
   const dispatch = useAppDispatch();
+
+  useEffect(preventAndroidBack, []);
 
   const handleSubmitLoginDetails = useCallback(() => {
     const validation = validateLoginDetails(email, password);
