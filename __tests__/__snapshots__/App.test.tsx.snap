@@ -15,11 +15,11 @@ exports[`renders correctly 1`] = `
   <RCTSafeAreaView
     style={
       {
-        "backgroundColor": "#f5f5dc",
         "flex": 1,
-        "height": "100%",
       }
     }
-  />
+  >
+    <View />
+  </RCTSafeAreaView>
 </View>
 `;

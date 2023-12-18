@@ -1,6 +1,25 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import {AppWithoutProvider} from '../../src/screens/AppWithoutProvider';
+import {Navigation} from '../../src/screens/navigation/Navigation';
+import {ScreenNames} from '../../src/domain/navigation/screenNames';
+
+const navigatorTestID = 'navigatorTestID';
+jest.mock('@react-navigation/native-stack', () => ({
+  createNativeStackNavigator: () => ({
+    Navigator: ({children, ...props}: any) => {
+      const RNView = require('react-native').View;
+      return (
+        <RNView testID={navigatorTestID} {...props}>
+          {children}
+        </RNView>
+      );
+    },
+    Screen: ({component, ...props}: any) => {
+      const RNView = require('react-native').View;
+      return <RNView {...props}>{component()}</RNView>;
+    },
+  }),
+}));
 
 jest.mock('../../src/domain/redux/reducers/userReducer', () => ({
   userIsAuthenticatedSelector: jest.fn(),
@@ -31,25 +50,29 @@ jest.mock('../../src/screens/login/LoginScreen', () => ({
 it('should render login screen, given user not logged in', () => {
   // Given
   mockAppSelector = false;
-  const renderable = <AppWithoutProvider />;
+  const renderable = <Navigation />;
 
   // When
-  const {getByText, queryByText} = render(renderable);
+  const {getByText, getByTestId} = render(renderable);
 
   // Then
+  expect(getByTestId(navigatorTestID).props.initialRouteName).toEqual(
+    ScreenNames.Login,
+  );
   expect(getByText(mockLoginScreenText)).toBeTruthy();
-  expect(queryByText(mockDashboardScreenText)).toBeFalsy();
 });
 
 it('should render dashboard screen, given user logged in', () => {
   // Given
   mockAppSelector = true;
-  const renderable = <AppWithoutProvider />;
+  const renderable = <Navigation />;
 
   // When
-  const {getByText, queryByText} = render(renderable);
+  const {getByText, getByTestId} = render(renderable);
 
   // Then
+  expect(getByTestId(navigatorTestID).props.initialRouteName).toEqual(
+    ScreenNames.Dashboard,
+  );
   expect(getByText(mockDashboardScreenText)).toBeTruthy();
-  expect(queryByText(mockLoginScreenText)).toBeFalsy();
 });

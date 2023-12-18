@@ -11,7 +11,12 @@ jest.mock('miragejs', () => ({
     },
   }),
 }));
-jest.mock('../src/screens/AppWithoutProvider');
+jest.mock('../src/screens/navigation/Navigation', () => ({
+  Navigation: () => {
+    const RNView = require('react-native').View;
+    return <RNView />;
+  },
+}));
 jest.mock('react-redux', () => ({
   Provider: (props: any) => {
     const RNView = require('react-native').View;

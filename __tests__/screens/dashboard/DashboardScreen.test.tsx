@@ -3,6 +3,8 @@ import {fireEvent, render, waitFor} from '@testing-library/react-native';
 import {DashboardScreen} from '../../../src/screens/dashboard/DashboardScreen';
 import items from '../../../src/domain/dashboard/items.json';
 import {userActions} from '../../../src/domain/redux/reducers/userReducer';
+import {NavigationProp} from '../../../src/domain/navigation/NavigationProp';
+import {ScreenNames} from '../../../src/domain/navigation/screenNames';
 
 const mockDashboardItemViewText = 'mockDashboardItemViewText';
 
@@ -15,6 +17,11 @@ jest.mock(
     },
   }),
 );
+
+const mockNavigation: NavigationProp = {
+  navigation: {navigate: jest.fn()},
+  route: {},
+} as any;
 
 jest.mock('../../../src/domain/dashboard/fetchItems', () => ({
   fetchItems: jest.fn().mockResolvedValue(undefined),
@@ -36,7 +43,7 @@ it('should render, given items not yet fetched', () => {
   // Given
   jest.mocked(mockAppSelector).items = [];
   jest.mocked(mockAppSelector).loading = true;
-  const renderable = <DashboardScreen />;
+  const renderable = <DashboardScreen {...mockNavigation} />;
 
   // When
   const {toJSON, getByTestId} = render(renderable);
@@ -50,7 +57,7 @@ it('should render, given items fetched', async () => {
   // Given
   jest.mocked(mockAppSelector).items = items as any;
   jest.mocked(mockAppSelector).loading = false;
-  const renderable = <DashboardScreen />;
+  const renderable = <DashboardScreen {...mockNavigation} />;
   const {toJSON, queryByTestId, getAllByText} = render(renderable);
 
   // When
@@ -68,7 +75,7 @@ it('should logout, given logout button pressed', () => {
   // Given
   jest.mocked(mockAppSelector).items = [];
   jest.mocked(mockAppSelector).loading = false;
-  const renderable = <DashboardScreen />;
+  const renderable = <DashboardScreen {...mockNavigation} />;
 
   const {getByText} = render(renderable);
   const logoutButton = getByText('logout');
@@ -78,4 +85,7 @@ it('should logout, given logout button pressed', () => {
 
   // Then
   expect(mockDispatch).toHaveBeenCalledWith(userActions.logout());
+  expect(mockNavigation.navigation.navigate).toHaveBeenCalledWith(
+    ScreenNames.Login,
+  );
 });

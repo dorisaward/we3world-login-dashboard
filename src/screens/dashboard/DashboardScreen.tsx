@@ -7,8 +7,12 @@ import {useAppDispatch, useAppSelector} from '../../domain/redux/hooks';
 import {fetchItems} from '../../domain/dashboard/fetchItems';
 import {itemsSelector} from '../../domain/redux/reducers/itemsReducer';
 import {userActions} from '../../domain/redux/reducers/userReducer';
+import {NavigationProp} from '../../domain/navigation/NavigationProp';
+import {ScreenNames} from '../../domain/navigation/screenNames';
 
-export const DashboardScreen = (): React.JSX.Element => {
+export const DashboardScreen = ({
+  navigation,
+}: NavigationProp): React.JSX.Element => {
   const dispatch = useAppDispatch();
   const {items, loading} = useAppSelector(itemsSelector);
 
@@ -16,10 +20,10 @@ export const DashboardScreen = (): React.JSX.Element => {
     dispatch(fetchItems() as any);
   }, [dispatch]);
 
-  const handleLogout = useCallback(
-    () => dispatch(userActions.logout()),
-    [dispatch],
-  );
+  const handleLogout = useCallback(() => {
+    dispatch(userActions.logout());
+    navigation.navigate(ScreenNames.Login);
+  }, [dispatch, navigation]);
 
   return (
     <View style={styles.container}>

@@ -4,7 +4,8 @@ import {createServer} from 'miragejs';
 import items from './src/domain/dashboard/items.json';
 import {Provider} from 'react-redux';
 import {store} from './src/domain/redux/store';
-import {AppWithoutProvider} from './src/screens/AppWithoutProvider';
+import {Navigation} from './src/screens/navigation/Navigation';
+import {NavigationContainer} from '@react-navigation/native';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -16,17 +17,17 @@ function App(): React.JSX.Element {
     return server.shutdown;
   }, []);
 
-  const backgroundStyle: StyleProp<ViewStyle> = {
-    backgroundColor: '#f5f5dc',
-    height: '100%',
+  const safeAreaViewStyles: StyleProp<ViewStyle> = {
     flex: 1,
   };
 
   return (
     <Provider store={store}>
-      <SafeAreaView style={backgroundStyle}>
-        <AppWithoutProvider />
-      </SafeAreaView>
+      <NavigationContainer>
+        <SafeAreaView style={safeAreaViewStyles}>
+          <Navigation />
+        </SafeAreaView>
+      </NavigationContainer>
     </Provider>
   );
 }

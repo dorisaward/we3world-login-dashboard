@@ -4,8 +4,12 @@ import {styles} from './LoginScreen.styles';
 import {validateLoginDetails} from '../../domain/login/validateLoginDetails';
 import {useAppDispatch} from '../../domain/redux/hooks';
 import {userActions} from '../../domain/redux/reducers/userReducer';
+import {ScreenNames} from '../../domain/navigation/screenNames';
+import {NavigationProp} from '../../domain/navigation/NavigationProp';
 
-export const LoginScreen = (): React.JSX.Element => {
+export const LoginScreen = ({
+  navigation,
+}: NavigationProp): React.JSX.Element => {
   const [email, setEmail] = useState<string | undefined>(undefined);
   const [password, setPassword] = useState<string | undefined>(undefined);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -20,8 +24,9 @@ export const LoginScreen = (): React.JSX.Element => {
     } else if (validation) {
       setErrorMessage(undefined);
       dispatch(userActions.login());
+      navigation.navigate(ScreenNames.Dashboard);
     }
-  }, [email, password, setErrorMessage, dispatch]);
+  }, [email, password, setErrorMessage, dispatch, navigation]);
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic">
